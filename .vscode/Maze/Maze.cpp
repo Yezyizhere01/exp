@@ -44,6 +44,7 @@ void TurnRight(Direction&);
 void MoveForward(int&,Direction);
 void WheresAhead(int,Direction,int&);
 void TurnLeft(Direction&);
+bool shouldAddPos(int);
 
 //	This function loads the maze from the specified file
 //	returning the maze and its dimensions
@@ -70,6 +71,16 @@ bool LoadMaze(const char fname[])
 	}
 }
 
+bool shouldAddPos(int newPos) {
+    if (i == 0) return true;
+    if (newPos == posi[i - 1]) return false; // avoid going back
+    if (i >= 2 && newPos == posi[i - 2]) {
+        i--; // delete the last position
+        return false;
+    }
+    return true;
+}
+
 //	next line should be 'hand on the right wall' rule!
 //	This function solves the maze using the 'hand on left wall'
 //	rule, printing the maze position as it proceeds
@@ -83,13 +94,16 @@ void SolveMaze()
 	heading = DOWN;
 	while (!AtExit(pos))
 	{
-		posi[i]=pos;
-		i++;
-		if(i>=289)
-		{
-			cout<<"array too small\n";
-			abort();//  stop program
-		}
+        if(shouldAddPos(pos))
+        {
+            posi[i]=pos;
+            i++;
+            if(i>=289)
+            {
+                cout<<"array too small\n";
+                abort();//  stop program
+            }
+        }
 		WheresRight(pos,heading,other);
 		if (!Wall(other))
 		{
