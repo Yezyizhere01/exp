@@ -3,7 +3,7 @@
 *                                                   *
 *   Datafile must still contain size as first data. *
 *                                                   *
-*   Four functions are only stubs.                  * 
+*   Four functions are only stubs.                  *
 ****************************************************/
 
 #include <iostream>
@@ -52,7 +52,7 @@ void TurnLeft(Direction&);
 bool LoadMaze(const char fname[])
 {
 	ifstream ifs(fname);
-	
+
 	if (ifs.good())
 	{
 		ifs >> mazeWidth >> mazeHeight;
@@ -75,10 +75,10 @@ bool LoadMaze(const char fname[])
 //	rule, printing the maze position as it proceeds
 
 void SolveMaze()
-{	
+{
 	int pos, other;
 	Direction heading;
-	
+
 	FindEntrance(pos);
 	heading = DOWN;
 	while (!AtExit(pos))
@@ -126,10 +126,10 @@ void SolveMaze()
 
 //	This function scans the maze array for the first non-wall item
 //	It assumes that the entrance is in the top row of the maze array
-	
+
 void FindEntrance(int& pos)
 {
-	pos= 0;	
+	pos= 0;
 	while (Wall(pos)) pos++;
 }
 
@@ -156,7 +156,7 @@ void WheresRight(int pos, Direction heading, int& right)
 {
 	right=pos;
 	//know where the right is
-	switch (heading) 
+	switch (heading)
 	{
 	case DOWN:
 		{
@@ -232,7 +232,7 @@ void MoveForward(int& pos, Direction heading)
 void WheresAhead(int pos, Direction heading, int& ahead)
 {
 	ahead = pos;
-    switch (heading) 
+    switch (heading)
     {
     case DOWN:
         {
