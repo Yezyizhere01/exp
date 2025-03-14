@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include "Maze.h"
+#include <vector>
 using namespace std;
 
 //	The following enumerated type indicates directions within the maze
@@ -27,8 +28,10 @@ struct Position
 //	Global variables defining the maze to be solved
 
 char maze[17*17];
+//char* maze;  //  This is the maze using pointer
 int mazeWidth, mazeHeight;
 int posi[17*17];
+//vector<int> posi;  //  This is the posi using vector
 int i=0;
 //	These functions provide access to the maze
 //	as well as provide manipulation of direction
@@ -71,6 +74,30 @@ bool LoadMaze(const char fname[])
 	}
 }
 
+/*
+
+bool LoadMaze(const char* fname)
+{
+    ifstream ifs(fname);
+    if (ifs.good())
+    {
+        ifs >> mazeWidth >> mazeHeight;
+        for (int i = 0; i < mazeHeight; i++)
+            for (int j = 0; j < mazeWidth; j++)
+                ifs >> maze[i*mazeWidth + j];
+        ifs.close();
+        return true;
+    }
+    else
+    {
+        cerr << "File not found." << endl;
+        return false;
+    }
+}
+
+
+*/
+
 bool shouldAddPos(int newPos) {
     if (i == 0) return true;
     if (newPos == posi[i - 1]) return false; // avoid going back
@@ -94,7 +121,7 @@ void SolveMaze()
 	heading = DOWN;
 	while (!AtExit(pos))
 	{
-        if(shouldAddPos(pos))
+//        if(shouldAddPos(pos))
         {
             posi[i]=pos;
             i++;
@@ -168,7 +195,7 @@ bool AtExit(int pos)
 
 void WheresRight(int pos, Direction heading, int& right)
 {
-	right=pos;
+	right = pos;
 	//know where the right is
 	switch (heading)
 	{
