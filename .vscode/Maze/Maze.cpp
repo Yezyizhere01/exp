@@ -31,7 +31,7 @@ char maze[17*17];
 //char* maze;  //  This is the maze using pointer
 int mazeWidth, mazeHeight;
 int posi[17*17];
-//vector<int> posi;  //  This is the posi using vector
+//int* posi;
 int i=0;
 //	These functions provide access to the maze
 //	as well as provide manipulation of direction
@@ -56,14 +56,13 @@ bool shouldAddPos(int);
 bool LoadMaze(const char fname[])
 {
 	ifstream ifs(fname);
-
 	if (ifs.good())
 	{
 		ifs >> mazeWidth >> mazeHeight;
-		for (int i=0;i<mazeHeight;i++)
-			for (int j=0;j<mazeWidth;j++)
-				ifs >> maze[i*mazeWidth+j];
-				//load maze into array
+        for (int i = 0; i < mazeHeight; i++)
+            for (int j = 0; j < mazeWidth; j++)
+                ifs >> maze[i * mazeWidth + j];
+        // load maze into array
 		ifs.close();//loading complete
 		return true;
 	}
@@ -74,29 +73,25 @@ bool LoadMaze(const char fname[])
 	}
 }
 
-/*
-
-bool LoadMaze(const char* fname)
-{
-    ifstream ifs(fname);
-    if (ifs.good())
-    {
-        ifs >> mazeWidth >> mazeHeight;
-        for (int i = 0; i < mazeHeight; i++)
-            for (int j = 0; j < mazeWidth; j++)
-                ifs >> maze[i*mazeWidth + j];
-        ifs.close();
-        return true;
-    }
-    else
-    {
-        cerr << "File not found." << endl;
-        return false;
-    }
-}
-
-
-*/
+// bool LoadMazePointer(const char fname[])
+// {
+//     ifstream ifs(fname);
+//     if (ifs.is_open())
+//     {
+//         ifs >> mazeWidth >> mazeHeight;
+//         maze = new char[mazeWidth * mazeHeight];
+//         for (int i = 0; i < mazeHeight; i++)
+//             for (int j = 0; j < mazeWidth; j++)
+//                 ifs >> maze[i * mazeWidth + j];
+//         ifs.close();
+//         return true;
+//     }
+//     else
+//     {
+//         cerr << "File not found." << endl;
+//         return false;
+//     }
+// }
 
 bool shouldAddPos(int newPos) {
     if (i == 0) return true;
@@ -115,17 +110,18 @@ bool shouldAddPos(int newPos) {
 void SolveMaze()
 {
 	int pos, other;
+    //posi = new int[mazeWidth * mazeHeight];
 	Direction heading;
 
 	FindEntrance(pos);
 	heading = DOWN;
 	while (!AtExit(pos))
 	{
-//        if(shouldAddPos(pos))
+        if(shouldAddPos(pos))   //been "//" in step 1
         {
             posi[i]=pos;
             i++;
-            if(i>=289)
+            if(i>=mazeWidth*mazeHeight)
             {
                 cout<<"array too small\n";
                 abort();//  stop program
@@ -148,7 +144,7 @@ void SolveMaze()
 	}
 	posi[i]=pos;
 	i++;
-	if(i>=400)
+	if(i>=mazeWidth*mazeHeight)
 	{
 		cout<<"array too small\n";
 		abort();
@@ -163,6 +159,8 @@ void SolveMaze()
 	}
 	cout<<"total steps:"<<counter<<endl;
 	cout << "Maze solved" << endl;
+    // delete[] posi;
+    // delete[] maze;
 }
 
 //	This function scans the maze array for the first non-wall item

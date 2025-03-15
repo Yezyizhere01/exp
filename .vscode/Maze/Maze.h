@@ -6,6 +6,7 @@
 #define MAZE_H
 
 bool LoadMaze(const char[]);
+bool LoadMazePointer(const char[]);
 void SolveMaze();
 
 #endif

@@ -10,6 +10,8 @@ int main()
 	cin >> fname;
 	if (LoadMaze(fname))
 		SolveMaze();
+    // if (LoadMazePointer(fname))
+    //     SolveMaze();
 
 	return 0;
 }
