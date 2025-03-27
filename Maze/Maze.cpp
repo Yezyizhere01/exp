@@ -9,7 +9,6 @@
 #include <iostream>
 #include <fstream>
 #include "Maze.h"
-#include <vector>
 using namespace std;
 
 //	The following enumerated type indicates directions within the maze
@@ -27,11 +26,11 @@ struct Position
 //	All other locations in the maze can be any other character
 //	Global variables defining the maze to be solved
 
-char maze[17*17];
-//char* maze;  //  This is the maze using pointer
+//char maze[17*17];
+char* maze;  //  This is the maze using pointer
 int mazeWidth, mazeHeight;
-int posi[17*17];
-//int* posi;
+//int posi[17*17];
+int* posi;
 int i=0;
 //	These functions provide access to the maze
 //	as well as provide manipulation of direction
@@ -73,25 +72,25 @@ bool LoadMaze(const char fname[])
 	}
 }
 
-// bool LoadMazePointer(const char fname[])
-// {
-//     ifstream ifs(fname);
-//     if (ifs.is_open())
-//     {
-//         ifs >> mazeWidth >> mazeHeight;
-//         maze = new char[mazeWidth * mazeHeight];
-//         for (int i = 0; i < mazeHeight; i++)
-//             for (int j = 0; j < mazeWidth; j++)
-//                 ifs >> maze[i * mazeWidth + j];
-//         ifs.close();
-//         return true;
-//     }
-//     else
-//     {
-//         cerr << "File not found." << endl;
-//         return false;
-//     }
-// }
+bool LoadMazePointer(const char fname[])
+{
+    ifstream ifs(fname);
+    if (ifs.is_open())
+    {
+        ifs >> mazeWidth >> mazeHeight;
+        maze = new char[mazeWidth * mazeHeight];
+        for (int i = 0; i < mazeHeight; i++)
+            for (int j = 0; j < mazeWidth; j++)
+                ifs >> maze[i * mazeWidth + j];
+        ifs.close();
+        return true;
+    }
+    else
+    {
+        cerr << "File not found." << endl;
+        return false;
+    }
+}
 
 bool shouldAddPos(int newPos) {
     if (i == 0) return true;
@@ -110,7 +109,7 @@ bool shouldAddPos(int newPos) {
 void SolveMaze()
 {
 	int pos, other;
-    //posi = new int[mazeWidth * mazeHeight];
+    posi = new int[mazeWidth * mazeHeight];
 	Direction heading;
 
 	FindEntrance(pos);
@@ -159,8 +158,8 @@ void SolveMaze()
 	}
 	cout<<"total steps:"<<counter<<endl;
 	cout << "Maze solved" << endl;
-    // delete[] posi;
-    // delete[] maze;
+    delete[] posi;
+    delete[] maze;
 }
 
 //	This function scans the maze array for the first non-wall item

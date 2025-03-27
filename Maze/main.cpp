@@ -8,10 +8,9 @@ int main()
 
 	cout << "Maze File: ";
 	cin >> fname;
-	if (LoadMaze(fname))
-		SolveMaze();
-    // if (LoadMazePointer(fname))
-    //     SolveMaze();
-
+	// if (LoadMaze(fname))
+	// 	SolveMaze();
+    if (LoadMazePointer(fname))
+        SolveMaze();
 	return 0;
 }
